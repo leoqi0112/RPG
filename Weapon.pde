@@ -14,7 +14,7 @@ class Weapon {
     bulletSpeed = 5;
     bulletC = azure;
     strokeC = black;
-    size = 18;
+    size = 10;
     damage = 1;
   }
 

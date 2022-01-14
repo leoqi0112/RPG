@@ -44,6 +44,24 @@ class GIFS {
     currentFrame++;
   }
   
+  void showB(float x, float y, float w, float h) {
+    imageMode(CENTER);
+    image(pics[currentFrame],x,y,w,h);
+    if(frameCount%8 == 0) {
+    if (currentFrame < 80)
+    currentFrame++;
+    }
+  }
+  
+  void showC (float x, float y, float w, float h) {
+    imageMode(CENTER);
+    image(pics[currentFrame],x,y,w,h);
+    if(frameCount%8 == 0) {
+    if (currentFrame < 50)
+    currentFrame++;
+    }
+  }
+  
   void show(float a, float b) {
     imageMode(CENTER);
     if (currentFrame == numFrames) currentFrame = 0;

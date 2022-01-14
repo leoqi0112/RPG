@@ -14,9 +14,11 @@ class SpawnPool extends Enemy {
   }
     void show() {
     image (fishTank, location.x, location.y, 100, 100);
+    rectMode(CORNER);
     fill(black);
-    textSize(30);
-    text(hp, location.x, location.y-60);
+    rect(location.x-map(200, 0, 200, 0, 80)/2, location.y-80, map(200, 0, 200, 0, 80), 10);
+    fill(aqua, 200);
+    rect(location.x-map(200, 0, 200, 0, 80)/2, location.y-80, map(hp, 0, 200, 0, 80), 10);
   }
   
   void act() {

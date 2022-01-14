@@ -169,6 +169,8 @@ class Hero extends GameObject {
           if (item.type == INK) {
             InkTimer = 0;
             myWeapon = new ShotGun();
+            gun2T = false;
+            gun1T = false;
             inkT = true;
             myObj.hp = 0;
           }
@@ -206,6 +208,19 @@ class Hero extends GameObject {
     }
     if (hp <= 0) {
       mode = GAMEOVER;
+    }
+
+    for (int i = 0; i < obstacles.size(); i++) {
+      if (roomX == obstacles.get(i).roomx && roomY == obstacles.get(i).roomy) {
+        if (myHero.location.x+20 > obstacles.get(i).x && myHero.location.x+20 <= obstacles.get(i).x + obstacles.get(i).s/2 && myHero.location.y > obstacles.get(i).y && myHero.location.y < obstacles.get(i).y + obstacles.get(i).s)
+          myHero.location.x = obstacles.get(i).x-20;
+        if (myHero.location.x-20 < obstacles.get(i).x+obstacles.get(i).s && myHero.location.x-20 >= obstacles.get(i).x + obstacles.get(i).s/2 && myHero.location.y > obstacles.get(i).y && myHero.location.y < obstacles.get(i).y + obstacles.get(i).s)
+          myHero.location.x = obstacles.get(i).x + obstacles.get(i).s + 20;
+        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y+20 > obstacles.get(i).y && myHero.location.y +20 < obstacles.get(i).y + obstacles.get(i).s/2)
+          myHero.location.y = obstacles.get(i).y-20;
+        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y-80 < obstacles.get(i).y+obstacles.get(i).s && myHero.location.y-80 >= obstacles.get(i).y + obstacles.get(i).s/2)
+          myHero.location.y = obstacles.get(i).y + obstacles.get(i).s + 80;
+      }
     }
   }
 

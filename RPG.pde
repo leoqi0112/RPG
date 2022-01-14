@@ -10,6 +10,10 @@ GIFS skeletonDown;
 GIFS skeletonLeft;
 GIFS skeletonRight;
 GIFS lantern;
+GIFS bossI;
+GIFS bossM;
+GIFS bossD;
+GIFS skeleton2;
 
 Buttons startButton, buttonH, buttonV;
 boolean upkey, downkey, leftkey, rightkey, space, gun1, gun2, gun3;
@@ -17,18 +21,19 @@ ArrayList<GameObject> myObjects;
 ArrayList<Particles> myParticles;
 ArrayList<DarknessCell> darkness;
 int[] lightValue = new int[25761];
+int[][] OBgrid = new int[10][9];
 
 //settings: dropped item types
 final int HEALTH = 2;
 final int BULLETADD = 50;
 
 //constants
-final int TURRET_HP = 40;
+final int TURRET_HP = 200;
 final int TURRET_SIZE = 80;
 final int TURRET_THRESHOLD = 60;
 final int TURRET_BULLET_SIZE = 10;
 
-final int SPAWN_POOL_HP = 30;
+final int SPAWN_POOL_HP = 200;
 final int SPAWN_POOL_SIZE = 80;
 
 final int HERO_SIZE = 60;
@@ -89,6 +94,7 @@ PImage wave;
 PImage octopus2;
 PImage cage;
 PImage KEY;
+PImage kraken;
 
 color northRoom, eastRoom, southRoom, westRoom;
 
@@ -118,14 +124,23 @@ boolean wasPressed;
 //Hero
 Hero myHero;
 int ti = 0;
-int tx = width/2;
-int ty = height/2;
 
 //pet
 Pet myPet;
 
 //bullet
 int bulletAmount = 200;
+
+//image support variable
+int kr = 0;
+
+//obstacle
+//add test obstacle
+Obstacle obs = new Obstacle(150, 150, 70, 10, 8);
+Obstacle obs2 = new Obstacle(800-150, 800-200, 70, 10, 8);
+Obstacle obs3 = new Obstacle(150, 800-200, 70, 10, 8);
+
+ArrayList<Obstacle> obstacles = new ArrayList<>();
 
 void setup() {
   mode = INTRO;
@@ -143,9 +158,17 @@ void setup() {
   skeletonDown = new GIFS(4, 10, "skeleton/down/Skeleton_", ".png");
   skeletonLeft = new GIFS(4, 10, "skeleton/left/Skeleton_", ".png");
   skeletonRight = new GIFS(4, 10, "skeleton/right/Skeleton_", ".png");
+  skeleton2 = new GIFS(4, 10, "Gnoll - Shaman/GnollShaman_Walk_", ".png");
 
   //lantern
   lantern = new GIFS(4, 10, "frame_", "_delay-0.16s.png");
+  
+  //boss initial
+  bossI = new GIFS(81,10, "boss/frame_", "_delay-0.06s.png");
+  //boss mid
+  bossM = new GIFS(25,10, "bossM/frame_", "_delay-0.06s copy.png");
+  //boss death
+  bossD = new GIFS(52,10, "bossD/frame_", "_delay-0.06s copy.png");
 
   map = loadImage("map.png");
 
@@ -163,6 +186,32 @@ void setup() {
   octopus2 = loadImage("friend.png");
   cage = loadImage("cage.png");
   KEY = loadImage("key.png");
+  kraken = loadImage("kraken.jpeg");
+
+  //OBgrid setup
+
+  for (int i = 0; i < OBgrid.length; i++) {
+    for (int k = 0; k < OBgrid[0].length; k++) {
+      OBgrid[i][k] = (int) random(0,3);
+      print(OBgrid[i][k]);
+    }
+  }
+
+  //initialize obstacle
+  int obx = 120;
+  int oby = 50;
+  for (int i = 0; i < OBgrid.length; i++) {
+    for (int k = 0; k < OBgrid[0].length; k++) {
+      if(OBgrid[i][k] == 0) {
+      obstacles.add(new Obstacle(obx,oby,70,6,3));
+      obx += 70;
+      } else {
+      obx += 70;
+      }
+    }
+    oby += 70;
+    obx = 120;
+  }
 
   //Create darkness
   darkness = new ArrayList<DarknessCell> (1000);
@@ -221,6 +270,9 @@ void setup() {
     }
     if (roomColor == azure) {
       myObjects.add(new SpawnPool(x, y));
+    }
+    if (roomColor == dBlue) {
+      myObjects.add(new boss(x,y));
     }
     x++;
     if (x == map.width) {

@@ -1,6 +1,7 @@
 void game() {
   drawRoom(color1, color2);
   drawGameObjects();
+  drawObstacle();
   drawDarkness();
 
   drawMiniMap();
@@ -126,15 +127,42 @@ void game() {
   line(200+dx, 80+dy, 200+dx+v.x, 80+dy+v.y);
 
   if (myHero.hasKey) {
-  textSize(60);
-  fill(white);
-  if (ti < 150) {
-    text("You Got The Key", width/2, height/2);
+    textSize(60);
+    fill(white);
+    if (ti < 150) {
+      text("You Got The Key", width/2, height/2);
+    }
+    ti++;
   }
-  ti++;
+
+  if (myHero.roomX == 10 && myHero.roomY == 8 && kr < 50) {
+    image(kraken, width/2, height/2, width, height);
+  }
+  if (myHero.roomX == 10 && myHero.roomY == 8) {
+    kr++;
+  } else {
+    kr = 0;
   }
 
   setLightValue();
+}
+
+void drawObstacle() {
+  for (int i = 0; i < obstacles.size(); i++) {
+    if (myHero.roomX == obstacles.get(i).roomx && myHero.roomY == obstacles.get(i).roomy) {
+      obstacles.get(i).show();
+      obstacles.get(i).act();
+    }
+  }
+
+  if (myHero.roomX == obs.roomx && myHero.roomY == obs.roomy) {
+    obs.show();
+    obs.act();
+    obs2.show();
+    obs2.act();
+    obs3.show();
+    obs3.act();
+  }
 }
 
 void drawDarkness() {
@@ -239,10 +267,15 @@ void drawRoom(color c1, color c2) {
   if (myHero.roomX == 10 && myHero.roomY == 8) {
     image(octopus2, 650, 150, 100, 100);
     image(cage, 650, 150, 150, 150);
-    if (myHero.hasKey && myHero.location.x > 575 && myHero.location.x < 725 && myHero.location.y > 75 && myHero.location.y < 225)
-    mode = GAMEOVER;
+    for (int i = 0; i < myObjects.size(); i++) {
+      GameObject myObj = myObjects.get(i);
+      if (myObj instanceof boss) {
+      if (myHero.hasKey && myObj.hp <= 0 && myHero.location.x > 575 && myHero.location.x < 725 && myHero.location.y > 75 && myHero.location.y < 225) {
+        mode = GAMEOVER;
+      }
+      }
+    }
   }
-  
 }
 
 void drawMiniMap() {

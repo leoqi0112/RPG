@@ -11,7 +11,7 @@ class SniperRifle extends Weapon {
 class AutoPistol extends Weapon {
  
   AutoPistol() {
-    super(AUTOPISTOL_THRESHOLD,AUTOPISTOL_BULLET_SPEED,Twhite,black,18);
+    super(AUTOPISTOL_THRESHOLD,AUTOPISTOL_BULLET_SPEED,Twhite,black,10);
     damage = 5;
   }
   
