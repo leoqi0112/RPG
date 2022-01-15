@@ -29,10 +29,10 @@ class Obstacle {
       myHero.location.x = x-20;
     if (myHero.location.x-20 < x+s && myHero.location.x-20 >= x + s/2 && myHero.location.y > y && myHero.location.y < y + s)
       myHero.location.x = x + s + 20;
-    if (myHero.location.x > x && myHero.location.x < x + s && myHero.location.y+20 > y && myHero.location.y +20 < y + s/2)
-      myHero.location.y = y-20;
-    if (myHero.location.x > x && myHero.location.x < x + s && myHero.location.y-80 < y+s && myHero.location.y-80 >= y + s/2)
-      myHero.location.y = y + s + 80;
+    if (myHero.location.x > x && myHero.location.x < x + s && myHero.location.y > y && myHero.location.y < y + s/2)
+      myHero.location.y = y;
+    if (myHero.location.x > x && myHero.location.x < x + s && myHero.location.y-60 < y+s && myHero.location.y-60 >= y + s/2)
+      myHero.location.y = y + s + 60;
     }
     
     int i = 0;

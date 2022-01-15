@@ -21,7 +21,7 @@ ArrayList<GameObject> myObjects;
 ArrayList<Particles> myParticles;
 ArrayList<DarknessCell> darkness;
 int[] lightValue = new int[25761];
-int[][] OBgrid = new int[10][9];
+int[][] OBgrid = new int[10][10];
 
 //settings: dropped item types
 final int HEALTH = 2;
@@ -162,13 +162,13 @@ void setup() {
 
   //lantern
   lantern = new GIFS(4, 10, "frame_", "_delay-0.16s.png");
-  
+
   //boss initial
-  bossI = new GIFS(81,10, "boss/frame_", "_delay-0.06s.png");
+  bossI = new GIFS(81, 10, "boss/frame_", "_delay-0.06s.png");
   //boss mid
-  bossM = new GIFS(25,10, "bossM/frame_", "_delay-0.06s copy.png");
+  bossM = new GIFS(25, 10, "bossM/frame_", "_delay-0.06s copy.png");
   //boss death
-  bossD = new GIFS(52,10, "bossD/frame_", "_delay-0.06s copy.png");
+  bossD = new GIFS(52, 10, "bossD/frame_", "_delay-0.06s copy.png");
 
   map = loadImage("map.png");
 
@@ -192,25 +192,41 @@ void setup() {
 
   for (int i = 0; i < OBgrid.length; i++) {
     for (int k = 0; k < OBgrid[0].length; k++) {
-      OBgrid[i][k] = (int) random(0,3);
-      print(OBgrid[i][k]);
+      OBgrid[i][k] = (int) random(0, 3);
     }
   }
 
+  //maze experiment
+  //maze stuff
+  Maze maze1 = new Maze();
+  println(maze1);
+  boolean solved = false;
+
+  while (!solved) {
+    if (maze1.trial(5, 0)) {
+      println ("success");
+      solved = true;
+    } else {
+      maze1.randomize();
+    }
+  }
+
+  println(maze1);
+
   //initialize obstacle
-  int obx = 120;
+  int obx = 50;
   int oby = 50;
   for (int i = 0; i < OBgrid.length; i++) {
     for (int k = 0; k < OBgrid[0].length; k++) {
-      if(OBgrid[i][k] == 0) {
-      obstacles.add(new Obstacle(obx,oby,70,6,3));
-      obx += 70;
+      if (maze1.getV(i,k) != 6) {
+        obstacles.add(new Obstacle(obx, oby, 70, 6, 3));
+        obx += 70;
       } else {
-      obx += 70;
+        obx += 70;
       }
     }
     oby += 70;
-    obx = 120;
+    obx = 50;
   }
 
   //Create darkness
@@ -272,7 +288,7 @@ void setup() {
       myObjects.add(new SpawnPool(x, y));
     }
     if (roomColor == dBlue) {
-      myObjects.add(new boss(x,y));
+      myObjects.add(new boss(x, y));
     }
     x++;
     if (x == map.width) {

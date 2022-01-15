@@ -216,10 +216,10 @@ class Hero extends GameObject {
           myHero.location.x = obstacles.get(i).x-20;
         if (myHero.location.x-20 < obstacles.get(i).x+obstacles.get(i).s && myHero.location.x-20 >= obstacles.get(i).x + obstacles.get(i).s/2 && myHero.location.y > obstacles.get(i).y && myHero.location.y < obstacles.get(i).y + obstacles.get(i).s)
           myHero.location.x = obstacles.get(i).x + obstacles.get(i).s + 20;
-        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y+20 > obstacles.get(i).y && myHero.location.y +20 < obstacles.get(i).y + obstacles.get(i).s/2)
-          myHero.location.y = obstacles.get(i).y-20;
-        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y-80 < obstacles.get(i).y+obstacles.get(i).s && myHero.location.y-80 >= obstacles.get(i).y + obstacles.get(i).s/2)
-          myHero.location.y = obstacles.get(i).y + obstacles.get(i).s + 80;
+        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y > obstacles.get(i).y && myHero.location.y < obstacles.get(i).y + obstacles.get(i).s/2)
+          myHero.location.y = obstacles.get(i).y;
+        if (myHero.location.x > obstacles.get(i).x && myHero.location.x < obstacles.get(i).x + obstacles.get(i).s && myHero.location.y-60 < obstacles.get(i).y+obstacles.get(i).s && myHero.location.y-60 >= obstacles.get(i).y + obstacles.get(i).s/2)
+          myHero.location.y = obstacles.get(i).y + obstacles.get(i).s + 60;
       }
     }
   }

@@ -47,11 +47,13 @@ class Weapon {
     for (int i = 0; i < myObjects.size(); i++) {
       GameObject myObj = myObjects.get(i);
       if (myObj instanceof Enemy) {
-        if (shotTimer >= threshold) {
-          PVector aimVector = new PVector(myObj.location.x-myPet.location.x, myObj.location.y-myPet.location.y);
-          aimVector.setMag(bulletSpeed);
-          myObjects.add(new Bullet(aimVector, bulletC, size, damage));
-          shotTimer = 0;
+        if (myObj.inRoomWith(myHero)) {
+          if (shotTimer >= threshold) {
+            PVector aimVector = new PVector(myObj.location.x-myPet.location.x, myObj.location.y-myPet.location.y);
+            aimVector.setMag(bulletSpeed);
+            myObjects.add(new Bullet(aimVector, bulletC, size, damage));
+            shotTimer = 0;
+          }
         }
       }
     }
